@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <div class="container-fluid">
+    <div class="row mb-3">
+      <div class="col">
+        <h1>TODO list</h1>
+      </div>
+      <div class="col d-flex justify-content-end align-items-center">
+        <a href="{% url 'tasks:create' %}" class="btn btn-lg btn-primary">Add Task</a>
+      </div>
+    </div>
+    {% if task_list.all %}
+      {% for task in task_list %}
+        <div class="container">
+          <div class="row">
+            <div class="col">
+              <strong>{{ task.content }}
+                {% if task.is_done %}
+                  <span class="text-success">Done</span>
+                {% else %}
+                  <span class="text-danger">Not done</span>
+                {% endif %}
+              </strong>
+            </div>
+            <div class="col d-flex justify-content-end">
+              {% if task.is_done %}
+                <a href="{% url 'tasks:toggle_completed' task.pk %}" class="btn btn-secondary">Undo</a>
+              {% else %}
+                <a href="{% url 'tasks:toggle_completed' task.pk %}" class="btn btn-success">Complete</a>
+              {% endif %}
+            </div>
+          </div>
+          <div class="row">
+            <span class="font-size-small">Created: {{ task.date_created|date:"F d, Y, h:i A" }}
+          <span class="text-red-800">{% if task.deadline_date %}
+            Deadline: {{ task.deadline_date|date:"F d, Y, h:i A" }}
+          {% endif %}</span>
+              </span>
+          </div>
+          <div class="row">
+            <span class="text-secondary">Tags:
+              {% if task.tag_ids.all %}
+                {% for tag in task.tag_ids.all %}
+                  {{ tag.name }}
+                {% endfor %}
+              {% endif %}
+              <a href="{% url 'tasks:update' task.pk %}" class="text-decoration-none">
+              Update
+            </a>
+            <a href="{% url 'tasks:delete' task.pk %}" class="text-decoration-none">
+              Delete
+            </a>
+            </span>
+          </div>
+        </div>
+        <hr>
+      {% endfor %}
+    {% else %}
+      <h3>No tasks yet</h3>
+    {% endif %}
+  </div>
+{% endblock %}

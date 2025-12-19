@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% load crispy_forms_filters %}
+{% block content %}
+  <div class="container">
+    {% if form.errors %}
+      <div class="alert alert-danger">
+        <p>There were some errors in the information you entered. Please correct the following:</p>
+        <ul>
+          {% for field in form %}
+            {% if field.errors %}
+              <li>{{ field.label }}: {{ field.errors|striptags }}</li>
+            {% endif %}
+          {% endfor %}
+          {% for error in form.non_field_errors %}
+            <li>{{ error|escape }}</li>
+          {% endfor %}
+        </ul>
+      </div>
+    {% endif %}
+    <form action="" method="post">
+      {% csrf_token %}
+      {{ form|crispy }}
+      <input type="submit" value="Save" class="btn btn-primary">
+      <a href="{% url 'tasks:tags' %}" class="btn btn-secondary">
+        Cancel
+      </a>
+    </form>
+  </div>
+{% endblock %}
