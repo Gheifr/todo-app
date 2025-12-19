@@ -8,6 +8,7 @@ from tasks.models import Task, Tag
 class TaskAdmin(admin.ModelAdmin):
     list_filter = ("content",)
 
+
 @admin.register(Tag)
 class TagAdmin(admin.ModelAdmin):
-    list_filter = ("name", )
+    list_filter = ("name",)

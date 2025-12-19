@@ -12,6 +12,6 @@ urlpatterns = [
     path("tags/create/", views.TagsCreateView.as_view(), name="tags_create"),
     path("tags/update/<int:pk>", views.TagsUpdate.as_view(), name="tags_update"),
     path("tags/delete/<int:pk>", views.TagsDelete.as_view(), name="tags_delete"),
-    ]
+]
 
-app_name="tasks"
+app_name = "tasks"

@@ -1,5 +1,4 @@
 from django.db import models
-from django.utils import timezone
 
 
 class Tag(models.Model):
@@ -7,6 +6,7 @@ class Tag(models.Model):
 
     def __str__(self):
         return self.name
+
 
 class Task(models.Model):
     content = models.TextField()
@@ -19,4 +19,3 @@ class Task(models.Model):
         blank=True,
         null=True,
     )
-
