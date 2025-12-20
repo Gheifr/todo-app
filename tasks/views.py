@@ -1,6 +1,6 @@
 from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse_lazy
-from django.views import generic
+from django.views import generic, View
 
 from tasks.forms import TaskForm
 from tasks.models import Tag, Task
@@ -8,7 +8,6 @@ from tasks.models import Tag, Task
 
 class TagsView(generic.ListView):
     model = Tag
-    # template_name = "tag_list.html"
 
 
 class TagsCreateView(generic.CreateView):
@@ -50,12 +49,9 @@ class TasksDelete(generic.DeleteView):
     success_url = reverse_lazy("tasks:index")
 
 
-def toggle_completed(request, pk):
-    task = get_object_or_404(Task, pk=pk)
-
-    task.is_done = not task.is_done
-    task.save()
-
-    return redirect(
-        "tasks:index",
-    )
+class ToggleCompletedView(View):
+    def post(self, request, pk, *args, **kwargs):
+        task = get_object_or_404(Task, pk=pk)
+        task.is_done = not task.is_done
+        task.save(update_fields=["is_done"])
+        return redirect("tasks:index")
