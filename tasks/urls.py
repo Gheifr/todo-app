@@ -4,7 +4,7 @@ from tasks import views
 
 urlpatterns = [
     path("", views.TasksView.as_view(), name="index"),
-    path("toggle-completed/<int:pk>", views.toggle_completed, name="toggle_completed"),
+    path("toggle-completed/<int:pk>", views.ToggleCompletedView.as_view(), name="toggle_completed"),
     path("create/", views.TasksCreateView.as_view(), name="create"),
     path("update/<int:pk>", views.TasksUpdate.as_view(), name="update"),
     path("delete/<int:pk>", views.TasksDelete.as_view(), name="delete"),

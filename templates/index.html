@@ -24,11 +24,15 @@
               </strong>
             </div>
             <div class="col d-flex justify-content-end">
-              {% if task.is_done %}
-                <a href="{% url 'tasks:toggle_completed' task.pk %}" class="btn btn-secondary">Undo</a>
-              {% else %}
-                <a href="{% url 'tasks:toggle_completed' task.pk %}" class="btn btn-success">Complete</a>
-              {% endif %}
+              <form action="{% url 'tasks:toggle_completed' task.pk %}" method="post">
+                {% csrf_token %}
+                <input type="submit"
+                    {% if task.is_done %}
+                       class="btn btn-secondary" value="Undo"
+                    {% else %}
+                       class="btn btn-success" value="Complete"
+                    {% endif %}/>
+              </form>
             </div>
           </div>
           <div class="row">
